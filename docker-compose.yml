@@ -15,7 +15,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    volumes:
+      - ./src:/home/node/app/src
+    expose:
+      - "4000"
     ports:
       - "4000:4000"
     depends_on:
@@ -27,6 +30,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: easytravel
       POSTGRES_DB: easytravel
+    command: npm run dev
 
 volumes:
   postgres-data:

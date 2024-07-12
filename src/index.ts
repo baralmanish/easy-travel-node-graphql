@@ -6,13 +6,14 @@ import { buildSchema } from "type-graphql";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-import { AppResolvers } from "./database";
+import { ProductResolver } from "./database/resolvers/ProductResolver";
 import { AppDataSource } from "./data-source";
 
 async function startServer() {
   await AppDataSource.initialize();
+
   const schema = await buildSchema({
-    resolvers: [AppResolvers],
+    resolvers: [ProductResolver],
   });
 
   const server = new ApolloServer({

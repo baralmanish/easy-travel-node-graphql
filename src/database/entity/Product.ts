@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID, Int, Float, InputType } from "type-graphql";
 
 @ObjectType()
 @Entity()
@@ -24,11 +24,50 @@ export class Product {
   @Column("float")
   price!: number;
 
-  @Field()
-  @Column()
-  availabilityDate!: Date;
+  @Field(() => Int)
+  @Column({ default: 1 })
+  quantity!: number;
 
-  @Field(() => String)
-  @Column()
-  location!: string;
+  @Field(() => Boolean)
+  @Column({ default: true })
+  isActive!: boolean;
+}
+
+@InputType()
+export class CreateProductInput {
+  @Field()
+  name!: string;
+
+  @Field()
+  description!: string;
+
+  @Field()
+  category!: string;
+
+  @Field(() => Float)
+  price!: number;
+
+  @Field(() => Int)
+  quantity?: number;
+}
+
+@InputType()
+export class UpdateProductInput {
+  @Field(() => Int, { nullable: true })
+  id?: number;
+
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field(() => Float, { nullable: true })
+  price?: number;
+
+  @Field(() => Int, { nullable: true })
+  quantity?: number;
+
+  @Field(() => Boolean, { nullable: true })
+  isActive?: boolean;
 }
