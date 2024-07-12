@@ -1,0 +1,17 @@
+{
+  "trailingComma": "es5",
+  "singleQuote": false,
+  "printWidth": 120,
+  "semi": true,
+  "endOfLine": "auto",
+  "tabWidth": 2,
+  "overrides": [
+    {
+      "files": [".*rc"],
+      "options": {
+        "parser": "json",
+        "trailingComma": "none"
+      }
+    }
+  ]
+}
