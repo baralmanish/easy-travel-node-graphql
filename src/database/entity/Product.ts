@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { ObjectType, Field, ID, Int, Float, InputType } from "type-graphql";
+import { Category } from "./Category";
 
 @ObjectType()
 @Entity()
@@ -16,39 +17,21 @@ export class Product {
   @Column("text")
   description!: string;
 
-  @Field()
-  @Column()
-  category!: string;
-
-  @Field()
-  @Column("float")
+  @Field(() => Float)
+  @Column("decimal")
   price!: number;
 
   @Field(() => Int)
   @Column({ default: 1 })
   quantity!: number;
 
-  @Field(() => Boolean)
+  @Field()
   @Column({ default: true })
   isActive!: boolean;
-}
 
-@InputType()
-export class CreateProductInput {
-  @Field()
-  name!: string;
-
-  @Field()
-  description!: string;
-
-  @Field()
-  category!: string;
-
-  @Field(() => Float)
-  price!: number;
-
-  @Field(() => Int)
-  quantity?: number;
+  @Field(() => Category)
+  @ManyToOne(() => Category, category => category.products, { lazy: true, onDelete: "CASCADE" })
+  category!: Promise<Category>;
 }
 
 @InputType()
@@ -68,6 +51,9 @@ export class UpdateProductInput {
   @Field(() => Int, { nullable: true })
   quantity?: number;
 
-  @Field(() => Boolean, { nullable: true })
+  @Field({ nullable: true })
   isActive?: boolean;
+
+  @Field(() => Int, { nullable: true })
+  categoryId?: number;
 }
