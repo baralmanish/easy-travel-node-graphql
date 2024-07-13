@@ -1,7 +1,7 @@
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 
 import { Category } from "../entity/Category";
-import { AppDataSource } from "../../data-source";
+import { AppDataSource } from "../data-source";
 import { Product, UpdateProductInput } from "../entity/Product";
 
 @Resolver(() => Product)

@@ -6,7 +6,7 @@ import { buildSchema } from "type-graphql";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-import { ProductResolver } from "./database/resolvers/ProductResolver";
+import { ProductResolver } from "./resolvers/ProductResolver";
 import { AppDataSource } from "./data-source";
 
 async function startServer() {
