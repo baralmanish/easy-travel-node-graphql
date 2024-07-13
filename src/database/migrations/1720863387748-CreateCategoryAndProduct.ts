@@ -16,6 +16,8 @@ export class CreateCategoryAndProduct1720863387748 implements MigrationInterface
               "name" character varying NOT NULL,
               "description" character varying NOT NULL,
               "price" numeric NOT NULL,
+              "location" character varying NULL,
+              "date" timestamp NULL,
               "quantity" integer NOT NULL,
               "isActive" boolean NOT NULL DEFAULT true,
               "categoryId" integer,

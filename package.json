@@ -9,7 +9,14 @@
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
     "prettier": "prettier --check 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
     "prettier:fix": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "npm run typeorm migration:create",
+    "schema:sync": "npm run typeorm schema:sync -- -d src/data-source.ts",
+    "migration:show": "npm run typeorm migration:show -- -d src/data-source.ts",
+    "migration:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/data-source.ts",
+    "seed": "ts-node src/database/seeders/seed.ts -d ./src/data-source.ts"
   },
   "keywords": [],
   "author": "",

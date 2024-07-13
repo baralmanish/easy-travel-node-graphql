@@ -12,8 +12,8 @@ export const AppDataSource = new DataSource({
   password: "easytravel",
   database: "easytravel",
   synchronize: true,
-  logging: false,
+  logging: true,
   entities: [Category, Product],
-  migrations: ["database/migrations/*.ts"],
+  migrations: ["./database/migrations/*.ts"],
   subscribers: [],
 });
