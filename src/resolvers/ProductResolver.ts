@@ -10,8 +10,11 @@ export class ProductResolver {
   private categoryRepository = AppDataSource.getRepository(Category);
 
   @Query(() => [Product])
-  async products(): Promise<Product[]> {
-    return await this.productRepository.find();
+  async products(@Arg("categoryId", { nullable: true }) categoryId?: number): Promise<Product[]> {
+    if (categoryId) {
+      return this.productRepository.find({ where: { category: { id: categoryId } }, relations: ["category"] });
+    }
+    return this.productRepository.find({ relations: ["category"] });
   }
 
   @Query(() => Product)
@@ -20,7 +23,7 @@ export class ProductResolver {
   }
 
   @Mutation(() => Boolean)
-  async removeProduct(@Arg("id") id: number): Promise<boolean> {
+  async deleteProduct(@Arg("id") id: number): Promise<boolean> {
     await this.productRepository.delete(id);
     return true;
   }

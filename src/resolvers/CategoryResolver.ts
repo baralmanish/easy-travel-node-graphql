@@ -9,11 +9,11 @@ export class CategoryResolver {
 
   @Query(() => [Category])
   async categories(): Promise<Category[]> {
-    return await this.categoryRepository.find();
+    return await this.categoryRepository.find({ cache: 1000 });
   }
 
   @Query(() => Category)
   async getCategoryById(@Arg("id", () => Int) id: number): Promise<Category | null> {
-    return await this.categoryRepository.findOneBy({ id });
+    return await this.categoryRepository.findOne({ where: { id }, cache: 1000 });
   }
 }
