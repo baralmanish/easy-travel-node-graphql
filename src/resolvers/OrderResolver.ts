@@ -1,8 +1,9 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 
 import { Order } from "../entity/Order";
 import { Product } from "../entity/Product";
 import { AppDataSource } from "../data-source";
+import { OrderStatus } from "../enums/order";
 
 @Resolver(() => Order)
 export class OrderResolver {
@@ -31,5 +32,18 @@ export class OrderResolver {
     });
 
     return this.orderRepository.save(order);
+  }
+
+  @Mutation(() => Order)
+  async updateOrderStatus(
+    @Arg("orderId", () => Int) orderId: number,
+    @Arg("status", () => OrderStatus) status: OrderStatus
+  ): Promise<Order> {
+    const order = await this.orderRepository.findOneBy({ id: orderId });
+    if (!order) {
+      throw new Error("Order not found");
+    }
+    order.status = status;
+    return await this.orderRepository.save(order);
   }
 }
