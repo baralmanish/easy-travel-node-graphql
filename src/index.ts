@@ -6,7 +6,8 @@ import { buildSchema } from "type-graphql";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-import { AppDataSource } from "./data-source"; // Your data-source setup
+import { AppDataSource } from "./data-source";
+import { OrderResolver } from "./resolvers/OrderResolver";
 import { ProductResolver } from "./resolvers/ProductResolver";
 import { CategoryResolver } from "./resolvers/CategoryResolver";
 
@@ -16,7 +17,7 @@ async function startServer() {
 
   // Build GraphQL schema
   const schema = await buildSchema({
-    resolvers: [CategoryResolver, ProductResolver],
+    resolvers: [CategoryResolver, ProductResolver, OrderResolver],
   });
 
   // Create Apollo Server instance
