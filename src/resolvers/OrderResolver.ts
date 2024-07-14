@@ -28,7 +28,7 @@ export class OrderResolver {
   }
 
   @Mutation(() => Order)
-  async placeOrder(
+  async createOrder(
     @Arg("customerName") customerName: string,
     @Arg("customerEmail") customerEmail: string,
     @Arg("productId", () => Int, { nullable: true }) productId?: number,

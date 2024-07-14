@@ -30,7 +30,7 @@ async function seed() {
 
   // Seed Products
   const products = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 12; i++) {
     const product = new Product();
     product.name = faker.commerce.productName();
     product.description = faker.lorem.sentences();
@@ -45,9 +45,10 @@ async function seed() {
 
   // Seed Bundles
   const bundles = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     const bundle = new Bundle();
-    const bundleProducts = faker.helpers.arrayElements(products, 3);
+    const activeProducts = products.filter(p => p.isActive);
+    const bundleProducts = faker.helpers.arrayElements(activeProducts, 3);
     const bundlePrice = bundleProducts.reduce((total, curProduct) => {
       return total + curProduct.price;
     }, 0);
