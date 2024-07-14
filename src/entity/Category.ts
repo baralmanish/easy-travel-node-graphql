@@ -1,6 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Product } from "./Product";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @ObjectType({ description: "Category" })
 @Entity()
@@ -12,8 +11,4 @@ export class Category {
   @Field()
   @Column()
   name!: string;
-
-  @Field(() => [Product])
-  @OneToMany(() => Product, product => product.category, { lazy: true })
-  products!: Promise<Product[]>;
 }

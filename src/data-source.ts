@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 
+import { Order } from "./entity/Order";
 import { Product } from "./entity/Product";
 import { Category } from "./entity/Category";
 
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: "easytravel",
   synchronize: true,
   logging: true,
-  entities: [Category, Product],
+  entities: [Category, Order, Product],
   migrations: ["./database/migrations/*.ts"],
   subscribers: [],
 });

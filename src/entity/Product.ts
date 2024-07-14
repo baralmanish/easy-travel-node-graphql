@@ -35,7 +35,7 @@ export class Product {
   isActive!: boolean;
 
   @Field(() => Category)
-  @ManyToOne(() => Category, category => category.products, { eager: true, onDelete: "CASCADE" })
+  @ManyToOne(() => Category, category => category.id, { eager: true, onDelete: "CASCADE" })
   category!: Category;
 }
 
