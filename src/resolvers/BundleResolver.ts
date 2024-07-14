@@ -21,7 +21,7 @@ export class BundleResolver {
       where: { id },
       relations: ["products"],
     });
-    return bundle || undefined; // Convert null to undefined
+    return bundle || undefined;
   }
 
   @Mutation(() => Bundle)

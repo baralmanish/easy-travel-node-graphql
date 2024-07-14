@@ -25,6 +25,17 @@ export class CreateOrder1720980490401 implements MigrationInterface {
           {
             name: "productId",
             type: "int",
+            isNullable: true,
+          },
+          {
+            name: "productId",
+            type: "int",
+            isNullable: true,
+          },
+          {
+            name: "bundleId",
+            type: "int",
+            isNullable: true,
           },
           {
             name: "status",
@@ -53,17 +64,36 @@ export class CreateOrder1720980490401 implements MigrationInterface {
         columnNames: ["productId"],
         referencedColumnNames: ["id"],
         referencedTableName: "product",
-        onDelete: "CASCADE",
+        onDelete: "SET NULL",
+        onUpdate: "CASCADE",
+      })
+    );
+
+    await queryRunner.createForeignKey(
+      "order",
+      new TableForeignKey({
+        columnNames: ["bundleId"],
+        referencedColumnNames: ["id"],
+        referencedTableName: "bundle",
+        onDelete: "SET NULL",
+        onUpdate: "CASCADE",
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     const table = await queryRunner.getTable("order");
-    const foreignKey = table?.foreignKeys.find(fk => fk.columnNames.indexOf("productId") !== -1);
-    if (foreignKey) {
-      await queryRunner.dropForeignKey("order", foreignKey);
+
+    const productForeignKey = table?.foreignKeys.find(fk => fk.columnNames.indexOf("productId") !== -1);
+    if (productForeignKey) {
+      await queryRunner.dropForeignKey("order", productForeignKey);
     }
+
+    const bundleForeignKey = table?.foreignKeys.find(fk => fk.columnNames.indexOf("bundleId") !== -1);
+    if (bundleForeignKey) {
+      await queryRunner.dropForeignKey("order", bundleForeignKey);
+    }
+
     await queryRunner.dropTable("order");
   }
 }

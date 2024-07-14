@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
+import { Bundle } from "./Bundle";
 import { Product } from "./Product";
 import { OrderStatus } from "../enums/order";
 
@@ -27,6 +28,9 @@ export class Order {
   @Field(() => Product, { nullable: true })
   @ManyToOne(() => Product)
   product!: Product;
+
+  @ManyToOne(() => Bundle, { nullable: true })
+  bundle!: Bundle;
 
   @Field(() => OrderStatus)
   @Column({
