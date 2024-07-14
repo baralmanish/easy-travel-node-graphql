@@ -17,9 +17,9 @@ export class OrderResolver {
 
   @Mutation(() => Order)
   async placeOrder(
-    @Arg("productId") productId: number,
     @Arg("customerName") customerName: string,
-    @Arg("customerEmail") customerEmail: string
+    @Arg("customerEmail") customerEmail: string,
+    @Arg("productId", () => Int) productId: number
   ): Promise<Order> {
     const product = await this.productRepository.findOneBy({ id: productId });
     if (!product) throw new Error("Product not found");
@@ -27,7 +27,6 @@ export class OrderResolver {
     const order = this.orderRepository.create({
       customerName,
       customerEmail,
-      orderDate: new Date().toISOString(),
       product,
     });
 
@@ -44,6 +43,7 @@ export class OrderResolver {
       throw new Error("Order not found");
     }
     order.status = status;
+    order.updatedAt = new Date();
     return await this.orderRepository.save(order);
   }
 }

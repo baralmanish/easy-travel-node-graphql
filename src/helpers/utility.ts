@@ -8,3 +8,8 @@ export const addDaysToDate = (days: number, date?: Date) => {
 
   return new Date(thisDate);
 };
+
+export const getDiscountedPrice = (price: number, discountPercentage: number) => {
+  const totalPrice = price - (price * discountPercentage) / 100;
+  return totalPrice.toFixed(2);
+};
