@@ -1,6 +1,7 @@
 import "reflect-metadata";
 
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "@apollo/server";
@@ -24,6 +25,7 @@ async function startServer() {
   // Create Apollo Server instance
   const server = new ApolloServer({
     schema,
+    cache: "bounded",
   });
 
   // Start the server
@@ -31,6 +33,13 @@ async function startServer() {
 
   // Create an Express application
   const app = express();
+
+  const corsOptions = {
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
+
+  app.use(cors(corsOptions));
   app.get("/", function (_req, res) {
     res.send("Welcome to easy-travel-server");
   });
