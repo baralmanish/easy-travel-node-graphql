@@ -29,6 +29,7 @@ export class Order {
   @ManyToOne(() => Product)
   product!: Product;
 
+  @Field(() => Bundle, { nullable: true })
   @ManyToOne(() => Bundle, { nullable: true })
   bundle!: Bundle;
 

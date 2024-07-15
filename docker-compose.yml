@@ -2,9 +2,8 @@ services:
   postgres:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_PASSWORD: easytravel
-      POSTGRES_DB: easytravel
+    env_file:
+      - .env.local
     ports:
       - "5432:5432"
     volumes:
@@ -23,13 +22,8 @@ services:
       - "4000:4000"
     depends_on:
       - postgres
-    environment:
-      NODE_ENV: development
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: easytravel
-      POSTGRES_DB: easytravel
+    env_file:
+      - .env.local
     command: npm run dev
 
 volumes:
