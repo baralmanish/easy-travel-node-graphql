@@ -1,7 +1,13 @@
-### Start Docker
+### Start Docker for Development
 
 ```bash
 docker compose up
+```
+
+### Start Docker for Testing
+
+```bash
+docker compose -f docker-compose.test.yml up -d
 ```
 
 ### Create Migration

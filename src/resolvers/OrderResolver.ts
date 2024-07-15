@@ -1,4 +1,4 @@
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, FieldResolver, Int, Mutation, Query, Resolver, Root } from "type-graphql";
 
 import { Order } from "../entity/Order";
 import { Bundle } from "../entity/Bundle";
@@ -25,6 +25,24 @@ export class OrderResolver {
     });
 
     return order || undefined;
+  }
+
+  @FieldResolver(() => [Product], { nullable: true })
+  async bundleProducts(@Root() order: Order): Promise<Product[] | null> {
+    if (!order.bundle) {
+      return null; // Handle case where order has no associated bundle
+    }
+
+    const bundle = await this.bundleRepository.findOne({
+      where: { id: order.bundle.id },
+      relations: ["products"],
+    });
+
+    if (!bundle || !bundle.products) {
+      return null; // Handle case where bundle or bundle.products are null
+    }
+
+    return bundle.products;
   }
 
   @Mutation(() => Order)
