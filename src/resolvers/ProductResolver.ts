@@ -9,12 +9,34 @@ export class ProductResolver {
   private productRepository = AppDataSource.getRepository(Product);
   private categoryRepository = AppDataSource.getRepository(Category);
 
+  // @Query(() => [Product])
+  // async products(@Arg("categoryId", { nullable: true }) categoryId?: number): Promise<Product[]> {
+  //   if (categoryId) {
+  //     return this.productRepository.find({ where: { category: { id: categoryId } }, relations: ["category"] });
+  //   }
+  //   return this.productRepository.find({ relations: ["category"] });
+  // }
   @Query(() => [Product])
-  async products(@Arg("categoryId", { nullable: true }) categoryId?: number): Promise<Product[]> {
-    if (categoryId) {
-      return this.productRepository.find({ where: { category: { id: categoryId } }, relations: ["category"] });
+  async products(
+    @Arg("categoryId", { nullable: true }) categoryId?: number,
+    @Arg("isActive", () => Boolean, { nullable: true }) isActive?: boolean
+  ): Promise<Product[]> {
+    interface IWhere {
+      category?: { id: number };
+      isActive?: boolean;
     }
-    return this.productRepository.find({ relations: ["category"] });
+
+    const where: IWhere = {};
+
+    if (categoryId !== undefined) {
+      where.category = { id: categoryId };
+    }
+
+    if (isActive !== undefined) {
+      where.isActive = isActive;
+    }
+
+    return this.productRepository.find({ where, relations: ["category"] });
   }
 
   @Query(() => Product)
